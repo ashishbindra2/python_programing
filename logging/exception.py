@@ -1,5 +1,5 @@
 import logging
-# logging.basicConfig(filename="abc.log",level=logging.INFO,filemode='w')
+#logging.basicConfig(filename="abc.log",level=logging.INFO,filemode='w')
 logging.basicConfig(format='%(asctime)s:%(name)s: %(levelname)s: %(message)s',datefmt = '%d-%m-%Y %I:%M:%S %p',level=logging.INFO)
 
 try:
