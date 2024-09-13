@@ -1,0 +1,13 @@
+Q1. Write a Program To REVERSE content of the given String by using slice operator?
+
+    input: ashish
+    output: hsihsa
+
+Q2. Write a Program To REVERSE content of the given String by using reversed() function?
+
+Q3. Write a Program to REVERSE content of given String By uing while loop?
+
+Q4. Write a Program to REVERSE order of words present in the given String?
+
+Q5. Write a Program to REVERSE internal contentvof each word?
+

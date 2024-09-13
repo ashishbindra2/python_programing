@@ -1,0 +1,24 @@
+[loggers]
+keys = root, demologger
+
+[handler]
+keys = fileHandler
+
+[Formatter]
+keys = sampleformatter
+
+[logger_root]
+level = DEBUG
+handler = fileHandler
+avalname = demologger
+
+[handler_fileHanfler]
+class = fileHandler
+level=DEBUG
+
+Formatter = sampleformatter
+args =('test.log','w')
+
+[Formatter_sampleFormatter]
+Formatter = %(asctime)s:%(name)s: %(levelname)s: %(message)s
+

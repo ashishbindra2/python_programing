@@ -17,7 +17,7 @@ consoleHandler.setFormatter(formatter)
 
 logger.addHandler(fileHandler)
 logger.addHandler(consoleHandler)
-
+e = "asds"
 logger.debug('debug message')
 logger.info('info message')
 logger.warning('warn message')

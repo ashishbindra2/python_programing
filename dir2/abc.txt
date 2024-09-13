@@ -1,0 +1,9 @@
+The Walrus Operator is a new addition to Python 3.8 and higher. In this article, we’re going to discuss the Walrus operator and explain it with an example.
+
+Introduction
+
+Walrus Operator allows you to assign a value to a variable within an expression. This can be useful when you need to use a value multiple times in a loop, but don’t want to repeat the...
+
+numbers = [1, 2, 3, 4, 5]
+while (n := len(numbers)) > 0:
+    print(numbers.pop())
