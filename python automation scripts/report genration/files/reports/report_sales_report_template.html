@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report for 13-Sep-2024</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+               <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+
+	<style>
+        body {
+            margin: 2em;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #555;
+            border-collapse: collapse;
+            padding: 0.25em;
+        }
+    </style>
+</head>
+
+<body class="container">
+    <img class="img-fluid" src="data:image/png;base64, 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" alt="logo"
+        style="float: left; width:50px; height:50px; margin-right: 0.5em;">
+    <div>
+        <span>Daily sales report for 13-Sep-2024</span><br>
+        <span>Acme Inc.</span>
+    </div>
+    <hr>
+    <div style="margin-top: 2em;"></div>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>S.No</th>
+                <th>Item Name</th>
+                <th>Cost per Unit</th>
+                <th>Units Sold</th>
+                <th>Revenue </th>
+            </tr>
+        </thead>
+        <tbody>
+            
+            <tr>
+                <td>1</td>
+                <td>Item 1</td>
+                <td>4</td>
+                <td>119</td>
+                <td>476</td>
+            </tr>
+            
+            <tr>
+                <td>2</td>
+                <td>Item 2</td>
+                <td>11</td>
+                <td>440</td>
+                <td>4840</td>
+            </tr>
+            
+            <tr>
+                <td>3</td>
+                <td>Item 3</td>
+                <td>2</td>
+                <td>1174</td>
+                <td>2348</td>
+            </tr>
+            
+            <tr>
+                <td>4</td>
+                <td>Item 4</td>
+                <td>11</td>
+                <td>145</td>
+                <td>1595</td>
+            </tr>
+            
+            <tr>
+                <td>5</td>
+                <td>Item 5</td>
+                <td>1</td>
+                <td>553</td>
+                <td>553</td>
+            </tr>
+            
+            <tr>
+                <td>6</td>
+                <td>Item 6</td>
+                <td>13</td>
+                <td>1176</td>
+                <td>15288</td>
+            </tr>
+            
+            <tr>
+                <td>7</td>
+                <td>Item 7</td>
+                <td>11</td>
+                <td>527</td>
+                <td>5797</td>
+            </tr>
+            
+            <tr>
+                <td>8</td>
+                <td>Item 8</td>
+                <td>2</td>
+                <td>1438</td>
+                <td>2876</td>
+            </tr>
+            
+            <tr>
+                <td>9</td>
+                <td>Item 9</td>
+                <td>13</td>
+                <td>1298</td>
+                <td>16874</td>
+            </tr>
+            
+            <tr>
+                <td>10</td>
+                <td>Item 10</td>
+                <td>8</td>
+                <td>849</td>
+                <td>6792</td>
+            </tr>
+            
+        </tbody>
+    </table>
+
+    <h2>Top performing items</h2>
+    <ul class="list-group list-group-flush">
+        
+        <li class="list-group-item">Item 9</li>
+        
+        <li class="list-group-item">Item 6</li>
+        
+        <li class="list-group-item">Item 10</li>
+        
+    </ul>
+    <p style="page-break-after: always;">&nbsp;</p>
+    <h2>Revenue Bar Chart</h2>
+    <!-- <img class="img-fluid" src="data:image/jpeg;base64, " alt="Revenue Bar Chart Image"> -->
+	<div id = "revenueBarChart"></div>
+	<script>
+		var data = [{x: [], y:[], type: 'bar'}];
+
+		
+		
+		data[0].x.push("Item 1");
+		data[0].y.push("476");
+		
+		
+		
+		data[0].x.push("Item 2");
+		data[0].y.push("4840");
+		
+		
+		
+		data[0].x.push("Item 3");
+		data[0].y.push("2348");
+		
+		
+		
+		data[0].x.push("Item 4");
+		data[0].y.push("1595");
+		
+		
+		
+		data[0].x.push("Item 5");
+		data[0].y.push("553");
+		
+		
+		
+		data[0].x.push("Item 6");
+		data[0].y.push("15288");
+		
+		
+		
+		data[0].x.push("Item 7");
+		data[0].y.push("5797");
+		
+		
+		
+		data[0].x.push("Item 8");
+		data[0].y.push("2876");
+		
+		
+		
+		data[0].x.push("Item 9");
+		data[0].y.push("16874");
+		
+		
+		
+		data[0].x.push("Item 10");
+		data[0].y.push("6792");
+		
+		
+
+		Plotly.newPlot('revenueBarChart', data);
+	</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
