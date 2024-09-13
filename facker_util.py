@@ -1,26 +1,21 @@
-import os
-import io
-import base64
 import re
 import string
 
-import jinja2
-from random import randint
+from random import shuffle
 from random import randint
 from random import choice
 from random import choices
-from datetime import datetime
 
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
+# from datetime import datetime
 
-from matplotlib import pyplot as plt
-from html_to_pdf import pdf_converter
+import requests
 from faker import Faker
 
 # Initialize Faker
 fake = Faker()
+
 credit_card_types = ['Visa', 'MasterCard', 'American Express', 'Discover']
+
 # List of some currency symbols
 currency_symbols = [
     '$',  # US Dollar
@@ -41,6 +36,7 @@ currency_symbols = [
     '₭',  # Laotian Kip
     '₨'  # Pakistani Rupee
 ]
+
 # List of custom nice-day messages
 messages = [
     "Wishing you a great day.",
@@ -54,17 +50,11 @@ messages = [
     "Make it a great day.",
     "Hope your day is filled with joy."
 ]
-
+grating = choice(messages)
 letters = string.ascii_uppercase + string.digits
 
 
-# invoiceNumber
-# invoiceDate
-# companyName
-# customerName
-
-def pay_method():
-    # Define possible credit card types
+def payment_detail():
 
     # Generate fake payment information
     payment_info = {
@@ -73,6 +63,10 @@ def pay_method():
         "CreditCardNumber": fake.credit_card_number(card_type="visa"),  # Generate a Visa card number
         "WorldpayTransactionID": fake.uuid4()  # Generate a random UUID for the transaction ID
     }
+    return payment_info
+
+
+def gen_company_billing():
 
     # Generate fake billing information
     billing_info = {
@@ -87,10 +81,10 @@ def pay_method():
         "BillingDate": fake.date_this_year().strftime('%B %d, %Y')  # Generates a random date within the current year
     }
 
-    return payment_info, billing_info
+    return billing_info
 
 
-def populate_item_detail(item=6):
+def item_detail(item=6):
     fake_project_items = [fake.bs() for _ in range(randint(2, item))]  # 5 fake project items
     items = []
     currency = choice(currency_symbols)
@@ -107,42 +101,85 @@ def populate_item_detail(item=6):
     return items
 
 
-def invoice_gen(html_name, invoice_num=5) -> None:
-    """
-    function to generate invoice
-    :param html_name:
-    :return:
-    """
-    file_name, _ = os.path.splitext(html_name)
+data = (
+    string.ascii_letters,
+    string.punctuation,
+    string.digits,
+    string.ascii_lowercase,
+    string.punctuation,
+    string.ascii_uppercase,
+    string.punctuation,
+    string.hexdigits,
+    string.ascii_letters,
+)
 
-    template = Environment(loader=FileSystemLoader("./templates")).get_template(html_name)
 
-    today_date: str = datetime.now().strftime("%d-%b-%Y")
-    try:
-        for invoice in range(1, invoice_num):
-            print(invoice)
-            order = randint(1, 900000000)
-            invoice_number = f"{order:0>10}"
-            payment_info, billing_info = pay_method()
+def password_generator():
+    password_list = []
 
-            context = {
-                "customerName": billing_info["Name"],
-                "invoiceNumber": invoice_number,
-                "invoiceDate": billing_info.get("Billing Date", today_date),
-                "items": populate_item_detail(),
-                "billInfo": billing_info,
-                "paymentMethod": payment_info,
-                "Grating": choice(messages)
-            }
-            report_text = template.render(context)
-            os.makedirs("files/invoices", exist_ok=True)
+    for pwd in data:
+        psd = choices(pwd, k=2)
+        password_list.extend(psd)
 
-            file_path = f"./files/invoices/invoice_{file_name}_{invoice_number}"
-            with open(f"{file_path}.html", mode="w", encoding="UTF-8") as f:
-                f.write(report_text)
+    shuffle(password_list)
 
-            pdf_converter(f"{file_path}.html", f"{file_path}.pdf")
-    except Exception as e:
-        print("Error", e)
+    return ''.join(password_list)
 
-    print("Invoice generated successfully!!!!")
+
+# Function to download a random image from Lorem Picsum
+def download_random_image(image_size=(800, 600)):
+    width, height = image_size
+    url = f'https://picsum.photos/{width}/{height}'
+
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        # URL might redirect to the actual image URL
+        actual_url = response.url
+        image_id = actual_url.split('/')[-3]
+        save_image(actual_url, image_id)
+    else:
+        print(f"Failed to fetch image. Status code: {response.status_code}")
+
+
+# Function to download image from a given URL
+def save_image(url, image_id):
+    response = requests.get(url)
+    if response.status_code == 200:
+        with open(f'{image_id}.jpg', 'wb') as f:
+            f.write(response.content)
+        print(f"Image {image_id} downloaded successfully.")
+    else:
+        print(f"Failed to download image. Status code: {response.status_code}")
+
+
+def number_generated(number=100, weight=None, k=11):
+    random_numbers = list(range(0, number + 1))
+    weights = [1] * (number + 1)
+    if weight:
+        weights[weight] = 100
+
+    num = choices(random_numbers, weights=weights, k=k)
+    return num
+
+
+def faker_data(number=1):
+    fk = Faker('en_IN')
+    faker_list = []
+
+    for _ in range(0, number):
+        sample_data = fk.simple_profile()
+        faker_list.append(sample_data)
+    return faker_list
+
+
+def generate_credit_card_details():
+
+    card_info = {
+        "Card Holder Name": fake.name(),
+        "Card Number": fake.credit_card_number(),
+        "Expiration Date": fake.credit_card_expire(),
+        "Security Code (CVV)": fake.credit_card_security_code(),
+        "Card Type": fake.credit_card_provider()
+    }
+    return card_info
