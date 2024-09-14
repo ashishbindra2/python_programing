@@ -7,7 +7,6 @@ from random import choice
 from random import choices
 
 # from datetime import datetime
-
 import requests
 from faker import Faker
 

@@ -6,7 +6,6 @@ from invoices import invoice_gen
 
 html = "sales_report_template.html"
 
-
 def main() -> None:
     while True:
         print("Press the following numer to generate the result: ")
